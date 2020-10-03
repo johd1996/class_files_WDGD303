@@ -4,14 +4,19 @@ import {
   StyleSheet,
   Text,
   View,
-  FlatList,
+  Animated,
   TouchableOpacity,
 } from "react-native";
+import AwesomeButton from "react-native-really-awesome-button"; // For button animations
+import * as Animatable from 'react-native-animatable'; // For text animations
+
+
 export default function App() {
   const [choice, setChoice] = useState(""); 
   const [pick1, setPick1] = useState("rock");
   const [pick2, setPick2] = useState("paper");
   const [pick3, setPick3] = useState("scissors");
+  const [iterationCount, setIterationCount] = useState(3);
 
   //This function gets user choice
   const getUserChoice = (userInput) => {
@@ -81,25 +86,27 @@ export default function App() {
       </View>
       <View style={styles.gamePiece}>
 
-        <TouchableOpacity onPress={() => setChoice("rock")}>
+        <AwesomeButton width={100} backgroundColor="violet" backgroundDarker="violet" style={styles.option1} onPress={() => setChoice("rock")}>
           {/* with Every button press, this will change the state with setState*/}
-          <Text style={styles.option1}>Rock</Text>
-        </TouchableOpacity>
+          Rock
+        </AwesomeButton>
 
-        <TouchableOpacity onPress={() => setChoice("paper")}>
-          <Text style={styles.option2}>Paper</Text>
-        </TouchableOpacity>
+        <AwesomeButton width={100} backgroundColor="orange" backgroundDarker="orange" style={styles.option2} onPress={() => setChoice("paper")}>
+          Paper
+        </AwesomeButton>
 
-        <TouchableOpacity onPress={() => setChoice("scissors")}>
-          <Text style={styles.option3}>Scissor</Text>
-        </TouchableOpacity>
+        <AwesomeButton width={100} backgroundColor="lightgreen" backgroundDarker="lightgreen" style={styles.option3} onPress={() => setChoice("scissors")}>
+          Scissor
+        </AwesomeButton>
 
       </View >
 
       <View style={styles.container2}>
         <Text style={styles.text}>You Threw : {choice}</Text>
         <Text style={styles.text}>Your opponent threw : {opponentChoice}</Text>
-        <Text style={styles.text1}>{winner}</Text>
+        <Animatable.Text style={styles.text1} animation="pulse" easing="ease-out" iterationCount="infinite">
+          {winner} {winner ==="User won!" ? "❤" : ""}
+        </Animatable.Text>
       </View>
     </View>
   );
@@ -119,19 +126,19 @@ const styles = StyleSheet.create({
   },
   option1: {
     backgroundColor: "violet",
-    padding: 30,
+    // padding: 30,
     margin: 10,
     borderRadius: 10,
   },
   option2: {
     backgroundColor: "orange",
-    padding: 30,
+    // padding: 30,
     margin: 10,
     borderRadius: 10,
   },
   option3: {
     backgroundColor: "lightgreen",
-    padding: 30,
+    // padding: 30,
     margin: 10,
     borderRadius: 10,
   },
@@ -146,7 +153,7 @@ const styles = StyleSheet.create({
   },
   text1: {
     fontSize: 30,
-    paddingTop: 60,
+    marginTop: 60,
     color: 'lightgreen',
     fontWeight: "bold",
   },
@@ -156,4 +163,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 30,
   },
+  
 });
